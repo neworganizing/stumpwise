@@ -8,3 +8,4 @@ public/uploads
 doc/api
 doc/app
 autotest.rb
+config/database.yml
