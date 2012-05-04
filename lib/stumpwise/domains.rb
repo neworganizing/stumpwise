@@ -29,7 +29,7 @@ module Stumpwise
       def current_site
         @site ||=
           if custom_domain?
-            Site.find_by_custom_domain(current_domain)
+            Site.find_by_custom_domain(current_domain.split(':')[0])
           elsif current_subdomain != 'www' && !current_subdomain.nil?
             Site.find_by_subdomain(current_subdomain)
           else

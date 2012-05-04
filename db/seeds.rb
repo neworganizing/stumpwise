@@ -24,34 +24,43 @@ require 'faker'
 # Themes / Layouts / Theme Assets
 ThemeAsset.delete_all
 default_theme = Theme.create(:name => "Default Theme")
-default_theme.layouts.create(
+puts "Theme Created"
+Layout.create(
+  :theme_id => default_theme.id,
   :filename => "layout.tpl",
   :content => File.new("#{Rails.root}/db/seeds/layout.tpl").readlines.join
 )
-default_theme.templates.create(
+puts "Theme Layout Created"
+Template.create(
+  :theme_id => default_theme.id,
   :filename => "page.tpl",
   :content => File.new("#{Rails.root}/db/seeds/page.tpl").readlines.join
 )
-default_theme.templates.create(
+puts "Theme template 1 Created"
+Template.create(
+  :theme_id => default_theme.id,
   :filename => 'blog.tpl',
   :content => File.new("#{Rails.root}/db/seeds/blog.tpl").readlines.join
 )
-default_theme.templates.create(
+puts "Theme template 2 Created"
+Template.create(
+  :theme_id => default_theme.id,
   :filename => 'article.tpl',
   :content => File.new("#{Rails.root}/db/seeds/article.tpl").readlines.join
 )
-default_theme.assets.create(:file => File.open("#{Rails.root}/db/seeds/master.css"))
-default_theme.assets.create(:file => File.open("#{Rails.root}/db/seeds/grid.css"))
-default_theme.assets.create(:file => File.open("#{Rails.root}/db/seeds/bg.jpg"))
-default_theme.assets.create(:file => File.open("#{Rails.root}/db/seeds/footer_bg.gif"))
-default_theme.assets.create(:file => File.open("#{Rails.root}/db/seeds/profile_drop_shadow_top.png"))
-default_theme.assets.create(:file => File.open("#{Rails.root}/db/seeds/profile_drop_shadow.png"))
-default_theme.assets.create(:file => File.open("#{Rails.root}/db/seeds/facebook_32.png"))
-default_theme.assets.create(:file => File.open("#{Rails.root}/db/seeds/flickr_32.png"))
-default_theme.assets.create(:file => File.open("#{Rails.root}/db/seeds/linkedin_32.png"))
-default_theme.assets.create(:file => File.open("#{Rails.root}/db/seeds/twitter_32.png"))
-default_theme.assets.create(:file => File.open("#{Rails.root}/db/seeds/youtube_32.png"))
-
+puts "Theme template 3 Created"
+#default_theme.assets.create(:file => File.open("#{Rails.root}/db/seeds/master.css"))
+#default_theme.assets.create(:file => File.open("#{Rails.root}/db/seeds/grid.css"))
+#default_theme.assets.create(:file => File.open("#{Rails.root}/db/seeds/bg.jpg"))
+#default_theme.assets.create(:file => File.open("#{Rails.root}/db/seeds/footer_bg.gif"))
+#default_theme.assets.create(:file => File.open("#{Rails.root}/db/seeds/profile_drop_shadow_top.png"))
+#default_theme.assets.create(:file => File.open("#{Rails.root}/db/seeds/profile_drop_shadow.png"))
+#default_theme.assets.create(:file => File.open("#{Rails.root}/db/seeds/facebook_32.png"))
+#default_theme.assets.create(:file => File.open("#{Rails.root}/db/seeds/flickr_32.png"))
+#default_theme.assets.create(:file => File.open("#{Rails.root}/db/seeds/linkedin_32.png"))
+#default_theme.assets.create(:file => File.open("#{Rails.root}/db/seeds/twitter_32.png"))
+#default_theme.assets.create(:file => File.open("#{Rails.root}/db/seeds/youtube_32.png"))
+#puts "Theme assets created"
 
 # User Accounts
 administrator = User.create(
@@ -64,6 +73,9 @@ administrator = User.create(
   :accepted_campaign_terms => true
 )
 administrator.update_attribute(:super_admin, true)
+
+puts "Created Admin"
+
 candidate = User.create(
   :first_name => "Anthony",
   :last_name => "Woods",
@@ -74,9 +86,11 @@ candidate = User.create(
   :accepted_campaign_terms => true
 )
 
+puts "Created Candidate"
 
 # Sites
-site = candidate.owned_sites.create(
+site = Site.create(
+  :owner_id => 1,
   :subdomain => "woods",
   :name => "Anthony Woods",
   :subhead => "The Courage of Conviction",
@@ -149,7 +163,7 @@ Page.create(
 )
 
 Page.create(
-  :site => site,
+ :site => site,
   :parent => issues,
   :title => 'Veterans',
   :body => "My position on veterans",

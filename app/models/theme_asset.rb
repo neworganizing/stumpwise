@@ -20,7 +20,7 @@
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 class ThemeAsset
-  include MongoMapper::EmbeddedDocument
+  include MongoMapper::Document
   plugin Joint
   attachment :file
   

@@ -9,3 +9,4 @@ doc/api
 doc/app
 autotest.rb
 config/database.yml
+config/amazon_aws.yml

@@ -29,7 +29,7 @@ Stumpwise::Application.routes.draw do
     root :to => 'home#index'
   end
 
-  constraints(:subdomain => 'admin', :domain => HOST) do
+  constraints(:subdomain => '/^(admin)$/', :domain => HOST) do
     namespace :manage do
         resources :sites
         resources :contributions do

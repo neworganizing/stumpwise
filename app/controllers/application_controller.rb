@@ -23,11 +23,11 @@ class ApplicationController < ActionController::Base
   include Stumpwise::Domains
   before_filter :set_time_zone, :set_current_user
   
-  filter_parameter_logging :password, :token
+  #filter_parameter_logging :password, :token
   
   helper :all
   helper_method :current_user_session, :current_user, :super_admin?
-  filter_parameter_logging :password, :password_confirmation
+  #filter_parameter_logging :password, :password_confirmation
   
   protected
     def set_time_zone

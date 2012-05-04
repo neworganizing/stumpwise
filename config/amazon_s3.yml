@@ -20,25 +20,25 @@
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 development:
-  bucket_name: stumpwise-development
-  access_key_id: AKIAJGRQI2SK2FQTNSGQ
-  secret_access_key: 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
+  bucket_name: tim-stumpwise-development
+  access_key_id: AKIAIEJ4FKYB4HCBAY7Q
+  secret_access_key: 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
   #distribution_domain: XXXX.cloudfront.net
 
 test:
-  bucket_name: stumpwise-test
-  access_key_id: AKIAJGRQI2SK2FQTNSGQ
-  secret_access_key: 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
+  bucket_name: tim-stumpwise-development
+  access_key_id: AKIAIEJ4FKYB4HCBAY7Q
+  secret_access_key: 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
   #distribution_domain: XXXX.cloudfront.net
 
 staging:
-  bucket_name: assets.stumpwise-staging.info
-  access_key_id: AKIAJGRQI2SK2FQTNSGQ
-  secret_access_key: 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
+  bucket_name: tim-stumpwise-development
+  access_key_id: AKIAIEJ4FKYB4HCBAY7Q
+  secret_access_key: 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
   #distribution_domain: XXXX.cloudfront.net
 
 production:
-  bucket_name: assets.stumpwise.com
-  access_key_id: AKIAJGRQI2SK2FQTNSGQ
-  secret_access_key: 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
+  bucket_name: tim-stumpwise-development
+  access_key_id: AKIAIEJ4FKYB4HCBAY7Q
+  secret_access_key: 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
   #distribution_domain: XXXX.cloudfront.net

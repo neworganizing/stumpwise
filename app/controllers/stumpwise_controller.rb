@@ -26,6 +26,8 @@ class StumpwiseController < ApplicationController
   def show
     find_item(params[:path])
 
+    puts "Item: " + @item
+
     case @item
     when :sitemap
       render :action => :sitemap
