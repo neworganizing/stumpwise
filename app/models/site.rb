@@ -81,7 +81,8 @@ class Site < ActiveRecord::Base
                   :mongo_theme_id, :mongo_theme_version_id, :mongo_theme_customization_id
   
   RESERVED_SUBDOMAINS = %w( www support blog billing help api cdn asset assets chat mail email calendar docs documents apps app calendars mobile mobi static admin administration administrator moderator official store buy pages page ssl contribute secure )
-  
+  PORT = 3000
+
   scope :active, :conditions => {:active => true}
   scope :contributable, :conditions => {:active => true, :can_accept_contributions => true}
   
@@ -166,8 +167,12 @@ class Site < ActiveRecord::Base
     supporters.all(:select => 'supporters.mobile_phone', :conditions => ['supporterships.receive_sms = ?', true]).collect(&:mobile_phone)
   end
   
-  def root_url
-    "http://#{domain}"
+  def root_url(port=nil)
+    if port
+      "http://#{domain}:#{port}"
+    else
+      "http://#{domain}"
+    end
   end
   
   # If custom_domain is blank, it has to be nil, else MySQL's unique index freaks
@@ -192,8 +197,9 @@ class Site < ActiveRecord::Base
     items.roots.all(:order => 'lft ASC', :conditions => {:published => true, :show_in_navigation => true})
   end
   
+  # SHOULD BE SSL!!!
   def contribute_url
-    "https://secure.#{HOST}/#{subdomain}/contribute".html_safe if can_accept_contributions?
+    "http://secure.#{HOST}:#{PORT}/#{subdomain}/contribute".html_safe if can_accept_contributions?
   end
   
   def to_liquid
@@ -237,10 +243,19 @@ class Site < ActiveRecord::Base
   def template
     return nil unless theme = ThemeVersion.find(mongo_theme_version_id)
     theme_assigns = theme.to_liquid
+
+    puts "Theme assigns: #{theme_assigns}"
+
     if mongo_theme_customization_id.present? && tc = ThemeCustomization.find(mongo_theme_customization_id)
       theme_assigns.deep_merge!(tc.to_liquid)
     end
-    [Liquid::Template.parse(theme.code), theme_assigns]
+
+    puts "Theme assigns (post merge): #{theme_assigns}"
+    
+    puts "Theme code: #{theme.code}"
+
+    #[Liquid::Template.parse(theme.code), theme_assigns]
+    [Liquid::Template.parse(theme.layout.content), theme_assigns]
   end
   
   def theme_customization

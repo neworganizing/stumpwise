@@ -43,7 +43,11 @@ class Theme
   end
   
   def layouts
-    return Layout.find(:all, :conditions => {:theme_id => id})
+    return Layout.where(:theme_id => id.to_s)
+  end
+
+  def layout
+    return layouts.first
   end
 
   private

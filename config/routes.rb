@@ -29,28 +29,35 @@ Stumpwise::Application.routes.draw do
     root :to => 'home#index'
   end
 
-  constraints(:subdomain => '/^(admin)$/', :domain => HOST) do
+  constraints(:subdomain => 'admin', :domain => HOST) do
     namespace :manage do
-        resources :sites
-        resources :contributions do
+      resources :sites
+      
+      resources :contributions do
         member do
           put :refund
         end
       end
+      
       resources :users
+      
       resources :themes do
         resources :layouts
         resources :templates
         resources :theme_assets
       end
+      
       resources :sessions
+      
       match 'login' => 'sessions#new', :as => :login
       match 'logout' => 'sessions#destroy', :as => :logout
+      
       root :to => 'sites#index'
     end
   end
 
-  constraints(:subdomain => 'secure', :domain => HOST, :protocol => 'https://') do
+  #constraints(:subdomain => 'secure', :domain => HOST, :protocol => 'https://') do
+  constraints(:subdomain => 'secure', :domain => HOST) do
     # https://secure.stumpwise.com/woods/contribute
     match ':site_subdomain/contribute' => 'contributions#new', :via => :get
     # https://secure.stumpwise.com/woods/contribute

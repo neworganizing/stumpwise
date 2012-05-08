@@ -24,9 +24,11 @@ class StumpwiseController < ApplicationController
   layout nil
   
   def show
+    puts "In show!"
+
     find_item(params[:path])
 
-    puts "Item: " + @item
+    #puts "Item: " + @item.to_s
 
     case @item
     when :sitemap
@@ -38,6 +40,8 @@ class StumpwiseController < ApplicationController
     when :not_found, nil
       render_404
     else
+      puts "Class: #{@item.class.to_s}"
+      puts "Item: #{@item.class.to_s.underscore}"
       send("render_#{@item.class.to_s.underscore}")
     end
   end
@@ -86,6 +90,7 @@ class StumpwiseController < ApplicationController
         :page => params[:page], 
         :per_page => params[:per_page]
       )
+
       if @is_feed
         render :template => 'stumpwise/show.atom.builder'
       else
@@ -109,9 +114,22 @@ class StumpwiseController < ApplicationController
     
     def render_liquid(object, assigns = {})
       set_navbar_headers
+      
       @tpl, theme_assigns = current_site.template
-      assigns.update('site' => current_site.to_liquid, object.liquid_name => object.to_liquid, 'theme' => theme_assigns)
+
+      assigns.update('site' => current_site.to_liquid, 
+                     object.liquid_name => object.to_liquid, 
+                     'theme' => theme_assigns)
+      
+      content_for_template = Liquid::Template.parse(Template.where(:theme_id => 4, :filename => "#{object.liquid_name}.tpl").first.content).render(assigns)
+
+      assigns.update('content_for_layout' => content_for_template)
+
       result = @tpl.render(assigns, :registers => {:controller => self, :site => current_site})
+      
+      puts "Assigns: #{assigns.to_a.join('  ')}"
+      puts "Template Result: #{result}\n\n"
+      
       render :text => result, :status => :ok, :content_type => 'text/html;charset=utf-8'
     end
 end

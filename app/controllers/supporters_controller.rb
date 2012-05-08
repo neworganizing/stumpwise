@@ -29,8 +29,9 @@ class SupportersController < ApplicationController
   
   def create
     current_site.supporters.add(params[:supporter])
+    flash[:notice] = t('supporter.create.succeed')
     respond_to do |format|
-      format.html{ redirect_to current_site.root_url }
+      format.html{ redirect_to current_site.root_url(self.request.port) }
       format.js{ render :nothing => true }
     end
   rescue

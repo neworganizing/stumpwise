@@ -23,7 +23,10 @@ require 'faker'
 
 # Themes / Layouts / Theme Assets
 ThemeAsset.delete_all
-default_theme = Theme.create(:name => "Default Theme")
+default_theme = Theme.create!(:name => "Default Theme", :default => true)
+
+default_theme.versions.create!(:active => true)
+
 puts "Theme Created"
 Layout.create(
   :theme_id => default_theme.id,
@@ -49,6 +52,7 @@ Template.create(
   :content => File.new("#{Rails.root}/db/seeds/article.tpl").readlines.join
 )
 puts "Theme template 3 Created"
+
 #default_theme.assets.create(:file => File.open("#{Rails.root}/db/seeds/master.css"))
 #default_theme.assets.create(:file => File.open("#{Rails.root}/db/seeds/grid.css"))
 #default_theme.assets.create(:file => File.open("#{Rails.root}/db/seeds/bg.jpg"))
@@ -89,8 +93,7 @@ candidate = User.create(
 puts "Created Candidate"
 
 # Sites
-site = Site.create(
-  :owner_id => 1,
+site = candidate.owned_sites.create!(
   :subdomain => "woods",
   :name => "Anthony Woods",
   :subhead => "The Courage of Conviction",

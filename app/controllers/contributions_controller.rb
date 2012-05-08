@@ -35,24 +35,30 @@ class ContributionsController < ApplicationController
     @contribution.ip = request.ip
     @credit_card = CreditCard.new(params[:credit_card])
 
+    puts "Made it to validation"
+
     if @credit_card.valid? && @contribution.save
+      puts "Is Valid"
       @contribution.approve!(:approved, @credit_card.to_hash)
-      if @contribution.approved?
+      #if @contribution.approved?
+        puts "Is approved"
         respond_to do |format|
           format.html { redirect_to "/#{@site.subdomain}/contribute/thanks/#{@contribution.order_id}" }
           format.js { render :nothing => true }
         end
-      else
-        @error = "#{t('contribution.process.fail.rejected')} #{@contribution.transaction_errors}"
-        respond_to do |format|
-          format.html do
-            flash.now[:error] = @error
-            render :action => 'new'
-          end
-          format.js { render :text => @error, :status => :unprocessable_entity }
-        end
-      end
+      #else
+      #  puts "Is not approved"
+      #  @error = "#{t('contribution.process.fail.rejected')} #{@contribution.transaction_errors}"
+      #  respond_to do |format|
+      #    format.html do
+      #      flash.now[:error] = @error
+      #      render :action => 'new'
+      #    end
+      #    format.js { render :text => @error, :status => :unprocessable_entity }
+      #  end
+      #end
     else
+      puts "Not Valid"
       @error = t('contribution.process.fail.invalid_record')
       respond_to do |format|
         format.html do

@@ -55,6 +55,10 @@ class ThemeVersion
     super(new_ifs)
   end
   
+  def layout
+    theme.layout
+  end
+
   def to_liquid
     {
       'name' => theme.name,
