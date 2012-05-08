@@ -21,24 +21,24 @@
 
 development:
   bucket_name: tim-stumpwise-development
-  access_key_id: AKIAIEJ4FKYB4HCBAY7Q
-  secret_access_key: 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
+  access_key_id: 
+  secret_access_key: 
   #distribution_domain: XXXX.cloudfront.net
 
 test:
   bucket_name: tim-stumpwise-development
-  access_key_id: AKIAIEJ4FKYB4HCBAY7Q
-  secret_access_key: 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
+  access_key_id: 
+  secret_access_key: 
   #distribution_domain: XXXX.cloudfront.net
 
 staging:
   bucket_name: tim-stumpwise-development
-  access_key_id: AKIAIEJ4FKYB4HCBAY7Q
-  secret_access_key: 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
+  access_key_id: 
+  secret_access_key: 
   #distribution_domain: XXXX.cloudfront.net
 
 production:
   bucket_name: tim-stumpwise-development
-  access_key_id: AKIAIEJ4FKYB4HCBAY7Q
-  secret_access_key: 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
+  access_key_id: 
+  secret_access_key: 
   #distribution_domain: XXXX.cloudfront.net
